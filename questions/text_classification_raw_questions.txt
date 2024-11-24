@@ -1,0 +1,120 @@
+Potential Interview Questions and Answers
+Q: What dataset did you use for this sentiment classification task?
+
+A: I used the SMS Spam Collection Dataset, which is a well-known dataset for classifying SMS messages as spam or not spam.
+
+Q: How did you preprocess the text data?
+
+A: I converted all text to lowercase, removed punctuation, and tokenized the text by splitting on spaces.
+
+Q: How did you handle varying sentence lengths in the dataset?
+
+A: I set a maximum sequence length (MAX_LEN). Sequences shorter than this length were padded with a <PAD> token, and longer sequences were truncated to fit the maximum length.
+
+Q: Can you explain how you built the vocabulary?
+
+A: I built the vocabulary by counting the frequency of each token in the training texts. Tokens appearing at least twice (min_freq=2) were included. I also added special tokens <PAD> and <UNK> for padding and unknown words.
+
+Q: Why did you choose a transformer-based model for this task?
+
+A: Transformer models are effective in capturing contextual relationships in data, and they have shown state-of-the-art performance in various NLP tasks, including text classification.
+
+Q: How does positional embedding work in your model?
+
+A: Since transformers are position-agnostic, I added positional embeddings to the token embeddings to provide information about the position of each token in the sequence.
+
+Q: Why did you use global average pooling after the transformer encoder?
+
+A: Global average pooling aggregates information across the sequence, providing a fixed-size representation regardless of the input length, which is suitable for classification tasks.
+
+Q: What loss function did you use and why?
+
+A: I used CrossEntropyLoss because it's appropriate for multi-class classification problems, and in this case, for binary classification between spam and not spam.
+
+Q: How did you split the dataset?
+
+A: I split the dataset into training and validation sets using an 80-20 split with train_test_split from scikit-learn.
+
+Q: What optimizer did you choose and why?
+
+A: I used the Adam optimizer because it adapts the learning rate during training and generally provides good performance with minimal hyperparameter tuning.
+
+Q: How did you handle unknown words during numericalization?
+
+A: Words not found in the vocabulary were assigned the <UNK> token index to handle out-of-vocabulary words.
+
+Q: Why did you choose a batch size of 32?
+
+A: A batch size of 32 is a common choice that balances memory usage and training stability, providing efficient computation without requiring excessive resources.
+
+Q: Can you explain the architecture of your TransformerClassifier model?
+
+A: The model consists of an embedding layer for tokens, a positional embedding, transformer encoder layers, global average pooling, a dropout layer for regularization, and a final linear layer for classification.
+
+Q: How many transformer encoder layers did you use?
+
+A: I used 2 transformer encoder layers as defined by NUM_LAYERS.
+
+Q: What is the role of the dropout layer in your model?
+
+A: Dropout helps prevent overfitting by randomly setting a fraction of input units to zero during training, which encourages the model to learn more robust features.
+
+Q: How did you evaluate the model's performance?
+
+A: I evaluated the model using accuracy on the validation set after each epoch.
+
+Q: Why did you use torch.argmax during validation?
+
+A: torch.argmax selects the class with the highest predicted probability, which is necessary to determine the predicted class label for accuracy calculation.
+
+Q: What is the purpose of the __len__ and __getitem__ methods in the SMSDataset class?
+
+A: These methods allow the dataset to be indexed and iterated over by DataLoader, facilitating batch processing during training and evaluation.
+
+Q: How does the transformer handle sequences in your implementation?
+
+A: The transformer processes sequences by applying self-attention mechanisms across all tokens, allowing the model to capture dependencies regardless of their distance in the sequence.
+
+Q: Why did you set padding_idx=0 in the embedding layer?
+
+A: Setting padding_idx=0 ensures that the embedding for the <PAD> token does not contribute to the model's learning, effectively ignoring padding during training.
+
+Q: How does your model handle different sequence lengths during training?
+
+A: All sequences are either padded or truncated to a fixed MAX_LEN, ensuring uniform input size for batching. The <PAD> tokens are ignored in the embedding layer.
+
+Q: Can you explain the role of nn.TransformerEncoderLayer in your model?
+
+A: nn.TransformerEncoderLayer implements a single layer of the transformer encoder, including multi-head self-attention and a feedforward neural network, which are stacked to build the full transformer encoder.
+
+Q: Why did you choose mean pooling over other pooling methods?
+
+A: Mean pooling provides a simple and effective way to aggregate information across all tokens, capturing the average representation, which works well for classification tasks.
+
+Q: How would you improve this model for better performance?
+
+A: Potential improvements include using pre-trained embeddings or transformer models like BERT, increasing the model's depth, incorporating more sophisticated preprocessing, or using techniques like learning rate scheduling and regularization.
+
+Q: Did you perform any hyperparameter tuning? If not, which hyperparameters would you tune?
+
+A: In this implementation, I used fixed hyperparameters. For tuning, I would experiment with different embedding dimensions, number of heads, number of layers, learning rates, batch sizes, and dropout rates.
+
+Q: How does the build_vocab function handle rare words?
+
+A: Words with a frequency below min_freq are excluded from the vocabulary and are represented by the <UNK> token during numericalization.
+
+Q: Why did you use torch.no_grad() during validation?
+
+A: torch.no_grad() disables gradient computation, which reduces memory consumption and speeds up evaluation since gradients are not needed during validation.
+
+Q: How does the model differentiate between spam and not spam?
+
+A: The model learns patterns and features in the text data that are indicative of spam or not spam during training, allowing it to classify new messages based on learned representations.
+
+Q: What challenges might arise when deploying this model in a production environment?
+
+A: Challenges include handling real-time inference with varying message lengths, ensuring scalability, managing model updates, handling unseen vocabulary, and integrating the model with existing systems.
+
+Q: How would you handle imbalanced classes in this dataset if it exists?
+
+A: If the classes are imbalanced, I could use techniques like resampling (oversampling the minority class or undersampling the majority class), using class weights in the loss function, or employing specialized algorithms designed for imbalanced data.

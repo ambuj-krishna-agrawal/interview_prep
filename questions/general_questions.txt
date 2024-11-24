@@ -1,0 +1,126 @@
+Q: What are transformers, and how do they differ from traditional RNNs or LSTMs?
+
+A: Transformers are a type of neural network architecture that relies on self-attention mechanisms to process input data in parallel, rather than sequentially as RNNs or LSTMs do. This allows transformers to handle long-range dependencies more effectively and to be trained faster using parallelization. Additionally, transformers eliminate the vanishing gradient problem associated with deep RNNs.
+
+Q: Can you explain the self-attention mechanism in transformers?
+
+A: Self-attention allows each token in the input sequence to attend to every other token, enabling the model to weigh the importance of different tokens when encoding each position. It involves computing query, key, and value vectors for each token and using these to calculate attention scores, which determine how much focus each token should have on others.
+
+Q: What is the purpose of positional encoding in transformer models?
+
+A: Since transformers do not inherently capture the order of tokens in a sequence, positional encoding is added to the input embeddings to provide information about the position of each token. This helps the model understand the sequential order and relationships between tokens.
+
+Q: How do embeddings work, and why are they important in NLP tasks?
+
+A: Embeddings are dense vector representations of tokens (words or subwords) that capture semantic and syntactic information. They allow the model to work with continuous values instead of discrete tokens, facilitating the learning of relationships between words based on their contexts. Embeddings are crucial for effectively handling the high-dimensional and sparse nature of textual data.
+
+Q: What is overfitting, and how can it be prevented in your model?
+
+A: Overfitting occurs when a model learns the training data too well, including its noise, leading to poor generalization on unseen data. It can be prevented by techniques such as using dropout (as implemented in the model), regularization, early stopping, reducing model complexity, and increasing the size of the training dataset.
+
+Q: Explain the concept of dropout and its role in neural networks.
+
+A: Dropout is a regularization technique where a fraction of the neurons is randomly "dropped out" (i.e., set to zero) during each training iteration. This prevents neurons from co-adapting too much, encourages redundancy, and promotes the learning of more robust features, thereby reducing overfitting.
+
+Q: What is the role of the optimizer in training neural networks, and why did you choose Adam?
+
+A: The optimizer updates the model's parameters based on the gradients of the loss function to minimize the loss. Adam (Adaptive Moment Estimation) combines the benefits of two other extensions of stochastic gradient descent, namely AdaGrad and RMSProp, by adapting the learning rate for each parameter. It generally provides faster convergence and better performance with minimal hyperparameter tuning, making it a popular choice.
+
+Q: Can you describe what cross-entropy loss is and when it's used?
+
+A: Cross-entropy loss measures the difference between the predicted probability distribution and the true distribution (usually represented as one-hot vectors). It is commonly used in classification tasks, especially multi-class and binary classification, as it quantifies the performance of a classification model whose output is a probability value between 0 and 1.
+
+Q: What is batch normalization, and why might it be useful in your model?
+
+A: Batch normalization is a technique to normalize the inputs of each layer so that they have a mean of zero and a variance of one. This helps stabilize and accelerate training by reducing internal covariate shift, allowing for higher learning rates and acting as a form of regularization. While not used in the current model, it could be beneficial for deeper networks.
+
+Q: How do you handle class imbalance, and why is it important?
+
+A: Class imbalance occurs when one class significantly outnumbers another, which can bias the model towards the majority class. It can be handled by techniques such as resampling (oversampling the minority class or undersampling the majority class), using class weights in the loss function, or employing specialized algorithms like SMOTE. Addressing class imbalance is important to ensure the model performs well across all classes.
+
+Q: What is the difference between training, validation, and test datasets?
+
+A: The training dataset is used to train the model, the validation dataset is used to tune hyperparameters and evaluate the model during training to prevent overfitting, and the test dataset is used to assess the final performance of the model on unseen data. Proper separation ensures unbiased evaluation and generalization.
+
+Q: Explain the concept of learning rate and its impact on training.
+
+A: The learning rate determines the size of the steps the optimizer takes during gradient descent to reach the minimum of the loss function. A learning rate that's too high can cause the model to overshoot the minimum, leading to divergence, while a learning rate that's too low can result in slow convergence or getting stuck in local minima. Selecting an appropriate learning rate is crucial for effective training.
+
+Q: What are hyperparameters, and how do they differ from model parameters?
+
+A: Hyperparameters are configurations set before training that govern the behavior of the training process and the model architecture, such as learning rate, batch size, number of layers, and number of heads in a transformer. Model parameters, on the other hand, are learned during training, such as weights and biases in the network.
+
+Q: Can you explain what gradient clipping is and when it might be used?
+
+A: Gradient clipping involves limiting the magnitude of gradients during backpropagation to prevent them from becoming too large, which can cause instability and divergence during training. It is particularly useful in models prone to exploding gradients, such as very deep networks or RNNs.
+
+Q: What is the purpose of using a validation set during training?
+
+A: A validation set is used to evaluate the model's performance on unseen data during training. It helps in tuning hyperparameters, selecting the best model, and detecting overfitting by monitoring performance improvements or degradations that do not translate to the training data.
+
+Q: Describe the difference between precision and recall. When might you prioritize one over the other?
+
+A: Precision is the ratio of true positive predictions to the total positive predictions, indicating the accuracy of positive predictions. Recall is the ratio of true positive predictions to all actual positives, measuring the ability to capture all positive instances. Precision is prioritized when the cost of false positives is high, while recall is prioritized when the cost of false negatives is high.
+
+Q: What is the F1 score, and why is it useful?
+
+A: The F1 score is the harmonic mean of precision and recall, providing a single metric that balances both. It is useful when you need to account for both false positives and false negatives, especially in cases of class imbalance or when both precision and recall are important.
+
+Q: How does the transformer model scale with input size compared to RNNs?
+
+A: Transformers scale quadratically with input size due to the self-attention mechanism, which computes attention scores for every pair of tokens in the input. In contrast, RNNs scale linearly with input size because they process tokens sequentially. While transformers offer parallelization benefits, their quadratic scaling can be a limitation for very long sequences.
+
+Q: What are some common techniques to improve model generalization?
+
+A: Techniques include regularization (like dropout and L2 regularization), data augmentation, using more training data, early stopping, ensemble methods, and ensuring proper cross-validation. These methods help prevent overfitting and improve the model's ability to generalize to new, unseen data.
+
+Q: Explain the concept of transfer learning and how it could be applied to your model.
+
+A: Transfer learning involves leveraging a pre-trained model on a related task and fine-tuning it for a specific application. In the context of the transformer-based model, one could use a pre-trained transformer like BERT or RoBERTa, which have learned rich language representations, and fine-tune it on the spam classification task to potentially achieve better performance with less training data.
+
+Q: What is the role of the softmax function in your model?
+
+A: The softmax function converts the output logits from the final linear layer into probability distributions over the classes. It ensures that the probabilities sum to one, allowing the model to make meaningful class predictions based on the highest probability.
+
+Q: How would you handle out-of-vocabulary (OOV) words in your model?
+
+A: OOV words are mapped to a special <UNK> token during numericalization, allowing the model to handle words not seen during training. Alternatively, using subword tokenization techniques or byte-pair encoding (BPE) can help mitigate the OOV issue by breaking down rare words into known subword units.
+
+Q: Can you explain what attention heads are in a transformer model?
+
+A: Attention heads are parallel instances of the self-attention mechanism within a transformer layer. Each head learns to focus on different parts of the input sequence, capturing diverse aspects of the data. Multi-head attention allows the model to aggregate information from multiple representation subspaces, enhancing its ability to understand complex relationships.
+
+Q: What is layer normalization, and why is it used in transformers?
+
+A: Layer normalization standardizes the inputs across the features for each data point, stabilizing and accelerating training by reducing internal covariate shift. In transformers, it is applied before or after sub-layers (like self-attention and feedforward networks) to maintain consistent activation distributions.
+
+Q: Describe how backpropagation works in training neural networks.
+
+A: Backpropagation is the process of computing gradients of the loss function with respect to each model parameter by applying the chain rule. It involves a forward pass to compute outputs and loss, followed by a backward pass to propagate errors and calculate gradients, which are then used by the optimizer to update the parameters.
+
+Q: What is the vanishing gradient problem, and how do transformers address it?
+
+A: The vanishing gradient problem occurs when gradients become extremely small during backpropagation in deep networks, hindering the learning of early layers. Transformers address this by using residual connections and layer normalization, which help maintain gradient flow and stabilize training, allowing for deeper architectures without significant gradient issues.
+
+Q: How do you determine the optimal number of layers and heads in a transformer model?
+
+A: The optimal number of layers and heads is typically determined through hyperparameter tuning, which may involve grid search, random search, or more advanced methods like Bayesian optimization. Factors to consider include the complexity of the task, the size of the dataset, computational resources, and the balance between model performance and training time.
+
+Q: What is weight initialization, and why is it important?
+
+A: Weight initialization involves setting the initial values of a model's parameters before training begins. Proper initialization is crucial to ensure that gradients flow well, avoid symmetry breaking issues, and facilitate faster convergence. Techniques like Xavier (Glorot) or He initialization are commonly used to maintain variance across layers.
+
+Q: Explain the difference between parametric and non-parametric models.
+
+A: Parametric models assume a fixed number of parameters and make assumptions about the underlying data distribution (e.g., linear regression). Non-parametric models do not assume a fixed form and can grow in complexity with the data (e.g., k-Nearest Neighbors). Transformers are considered parametric models as they have a fixed architecture with a predetermined number of parameters.
+
+Q: How would you deploy this transformer-based model in a real-world application?
+
+A: Deployment involves several steps:
+
+Model Export: Save the trained model in a suitable format (e.g., TorchScript, ONNX).
+Serving Infrastructure: Set up a serving environment using frameworks like Flask, FastAPI, or specialized platforms like TensorFlow Serving or TorchServe.
+Scalability: Ensure the infrastructure can handle the expected load, possibly using containerization (Docker) and orchestration tools (Kubernetes).
+Latency Optimization: Optimize the model for faster inference through techniques like quantization or model pruning.
+Monitoring: Implement monitoring for performance, accuracy, and resource usage.
+Integration: Integrate the model with the application’s backend to receive inputs and provide predictions in real-time or batch processing.
